@@ -48,7 +48,7 @@ CutieWindow {
             onMovementEnded: {
                 if (refreshing) {
                     launcherApps.clear();
-                    settings.loadAppList();
+                    launcher.loadAppList();
                     refreshing = false     
                 }
             }
