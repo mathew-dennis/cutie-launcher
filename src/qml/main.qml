@@ -15,6 +15,10 @@ CutieWindow {
         launcherApps.append(data)
     }
 
+    CutieWlc {
+        id: compositor
+    }
+
         GridView {
             id: launchAppGrid
             anchors.fill: parent
@@ -68,7 +72,7 @@ CutieWindow {
                     }
 
                     onClicked: {
-                        CutieWlc.execApp(model["Desktop Entry/Exec"]);
+                        compositor.execApp(model["Desktop Entry/Exec"]);
                         launcherContainer.state = "closed"
                         if (root.state === "homeScreen")
                             wallpaperBlur.opacity = 0;
