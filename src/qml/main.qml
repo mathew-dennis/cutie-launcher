@@ -19,79 +19,79 @@ CutieWindow {
         id: compositor
     }
 
-        GridView {
-            id: launchAppGrid
-            anchors.fill: parent
-            anchors.topMargin: 20
-            model: launcherApps
-            cellWidth: width / Math.floor(width / 85)
-            cellHeight: cellWidth
+    GridView {
+        id: launchAppGrid
+        anchors.fill: parent
+        anchors.topMargin: 20
+        model: launcherApps
+        cellWidth: width / Math.floor(width / 85)
+        cellHeight: cellWidth
 
-            property real tempContentY: 0
-            property bool refreshing: false
+        property real tempContentY: 0
+        property bool refreshing: false
 
 
-            onAtYBeginningChanged: {
-                if(atYBeginning){
-                    tempContentY = contentY
-                }
+        onAtYBeginningChanged: {
+            if(atYBeginning){
+                tempContentY = contentY
             }
+        }
 
-            onContentYChanged: {
-                if(atYBeginning){
-                    if(Math.abs(tempContentY - contentY) > 30){
-                        if(refreshing){
-                            return;
-                        } else {
-                            refreshing = true               
-                        }
+        onContentYChanged: {
+            if(atYBeginning){
+                if(Math.abs(tempContentY - contentY) > 30){
+                    if(refreshing){
+                        return;
+                    } else {
+                        refreshing = true;
                     }
-                }
-            }
-
-            onMovementEnded: {
-                if (refreshing) {
-                    launcherApps.clear();
-                    launcher.loadAppList();
-                    refreshing = false     
-                }
-            }
-
-            delegate: Item {
-                Button {
-                    id: appIconButton
-                    width: launchAppGrid.cellWidth
-                    height: width
-                    icon.name: model["Desktop Entry/Icon"]
-                    icon.source: "file://" + model["Desktop Entry/Icon"]
-                    icon.color: "transparent"
-                    icon.height: width / 2
-                    icon.width: height / 2
-                    background: Rectangle {
-                        color: "transparent"
-                    }
-
-                    onClicked: {
-                        compositor.execApp(model["Desktop Entry/Exec"]);
-                        launcherContainer.state = "closed"
-                        if (root.state === "homeScreen")
-                            wallpaperBlur.opacity = 0;
-                    }
-                }
-                Text {
-                    anchors.bottom: appIconButton.bottom
-                    anchors.horizontalCenter: appIconButton.horizontalCenter
-                    text: model["Desktop Entry/Name"]
-                    font.pixelSize: 12
-                    clip: true
-                    font.family: "Lato"
-                    color: Atmosphere.textColor
-                    width: 2 * appIconButton.width / 3
-                    elide: Text.ElideRight
-                    horizontalAlignment: Text.AlignHCenter
                 }
             }
         }
+
+        onMovementEnded: {
+            if (refreshing) {
+                launcherApps.clear();
+                launcher.loadAppList();
+                refreshing = false;
+            }
+        }
+
+        delegate: Item {
+            Button {
+                id: appIconButton
+                width: launchAppGrid.cellWidth
+                height: width
+                icon.name: model["Desktop Entry/Icon"]
+                icon.source: "file://" + model["Desktop Entry/Icon"]
+                icon.color: "transparent"
+                icon.height: width / 2
+                icon.width: height / 2
+                background: Rectangle {
+                    color: "transparent"
+                }
+
+                onClicked: {
+                    compositor.execApp(model["Desktop Entry/Exec"]);
+                    launcherContainer.state = "closed"
+                    if (root.state === "homeScreen")
+                        wallpaperBlur.opacity = 0;
+                }
+            }
+            Text {
+                anchors.bottom: appIconButton.bottom
+                anchors.horizontalCenter: appIconButton.horizontalCenter
+                text: model["Desktop Entry/Name"]
+                font.pixelSize: 12
+                clip: true
+                font.family: "Lato"
+                color: Atmosphere.textColor
+                width: 2 * appIconButton.width / 3
+                elide: Text.ElideRight
+                horizontalAlignment: Text.AlignHCenter
+            }
+        }
+    }
 
     ListModel { id: launcherApps }
 }
