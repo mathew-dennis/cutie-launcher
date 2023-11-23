@@ -22,7 +22,6 @@ CutieWindow {
     GridView {
         id: launchAppGrid
         anchors.fill: parent
-        anchors.topMargin: 20
         model: launcherApps
         cellWidth: width / Math.floor(width / 85)
         cellHeight: cellWidth
