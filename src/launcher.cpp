@@ -1,6 +1,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QtGui/QGuiApplication>
+#include <QStandardPaths>
 
 #include <launcher.h>
 
@@ -27,15 +28,15 @@ bool Launcher::readDesktopFile(QIODevice &device, QSettings::SettingsMap &map) {
 }
 
 void Launcher::loadAppList() {
-    QString xdgDataDirs = QString(qgetenv("XDG_DATA_DIRS"));
-    QStringList dataDirList = xdgDataDirs.split(':');
+    QStringList dataDirList = QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation);
+    qDebug()<<dataDirList;
     for (int dirI = 0; dirI < dataDirList.count(); dirI++) {
-        QDir *curAppDir = new QDir(dataDirList.at(dirI) + "/applications");
+        QDir *curAppDir = new QDir(dataDirList.at(dirI));
         if (curAppDir->exists()) {
             QStringList entryFiles = curAppDir->entryList(QDir::Files);
             for (int fileI = 0; fileI < entryFiles.count(); fileI++) {
                 QString curEntryFileName = entryFiles.at(fileI);
-                QSettings *curEntryFile = new QSettings(dataDirList.at(dirI) + "/applications/" + curEntryFileName, desktopFormat);
+                QSettings *curEntryFile = new QSettings(dataDirList.at(dirI) + "/" + curEntryFileName, desktopFormat);
                 QString desktopType = curEntryFile->value("Desktop Entry/Type").toString();
                 if (desktopType == "Application") {
                     QVariantMap appData;
