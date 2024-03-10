@@ -57,34 +57,25 @@ CutieWindow {
         }
 
         delegate: Item {
-            Button {
+            CutieButton {
                 id: appIconButton
                 width: launchAppGrid.cellWidth
                 height: width
                 icon.name: model["Desktop Entry/Icon"]
                 icon.source: "file://" + model["Desktop Entry/Icon"]
-                icon.color: "transparent"
                 icon.height: width / 2
                 icon.width: height / 2
-                background: Rectangle {
-                    color: "transparent"
-                }
-
-                onClicked: {
+                background: null
+                onClicked:
                     compositor.execApp(model["Desktop Entry/Exec"]);
-                    launcherContainer.state = "closed"
-                    if (root.state === "homeScreen")
-                        wallpaperBlur.opacity = 0;
-                }
             }
-            Text {
+
+            CutieLabel {
                 anchors.bottom: appIconButton.bottom
                 anchors.horizontalCenter: appIconButton.horizontalCenter
                 text: model["Desktop Entry/Name"]
                 font.pixelSize: 12
                 clip: true
-                font.family: "Lato"
-                color: Atmosphere.textColor
                 width: 2 * appIconButton.width / 3
                 elide: Text.ElideRight
                 horizontalAlignment: Text.AlignHCenter
