@@ -6,23 +6,22 @@
 #include <QProcess>
 #include <QDir>
 
-class Launcher : public QObject
-{
-    Q_OBJECT
+class Launcher : public QObject {
+	Q_OBJECT
 
-public:
-    Launcher(QObject* parent = 0);
+    public:
+	Launcher(QObject *parent = 0);
 
-    Q_INVOKABLE void loadAppList();
+	Q_INVOKABLE void loadAppList();
 
-public Q_SLOTS:
+    public Q_SLOTS:
 
-signals:
+    signals:
 
-private:
-    static bool readDesktopFile(QIODevice &device, QSettings::SettingsMap &map);
-    QSettings::Format desktopFormat;
-
+    private:
+	static bool readDesktopFile(QIODevice &device,
+				    QSettings::SettingsMap &map);
+	QSettings::Format desktopFormat;
 };
 
 #endif // LAUNCHER_H
