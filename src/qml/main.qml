@@ -81,14 +81,6 @@ CutieWindow {
                 horizontalAlignment: Text.AlignHCenter
             }
             
-            menu: CutieMenu {
-                Repeater {
-                    model: 5
-                    CutieMenuItem {
-                        text: qsTr("Menu Item %1").arg(index)
-                    }
-                }
-            }
         }
     }
 
