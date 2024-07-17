@@ -92,7 +92,7 @@ CutieWindow {
                 horizontalAlignment: Text.AlignHCenter
             }
 
-            CutieMenu {
+            Menu {
                 CutieMenuItem {
                     text: "Option 1"
                     onTriggered: {
