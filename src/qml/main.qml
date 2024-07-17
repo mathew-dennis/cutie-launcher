@@ -92,18 +92,11 @@ CutieWindow {
                 horizontalAlignment: Text.AlignHCenter
             }
 
-            Menu {
-                id: menu
-                CutieMenuItem {
-                    text: "Option 1"
-                    onTriggered: {
-                        // Handle Option 1
-                    }
-                }
-                CutieMenuItem {
-                    text: "Option 2"
-                    onTriggered: {
-                        // Handle Option 2
+            menu: CutieMenu {
+                Repeater {
+                    model: 5
+                    CutieMenuItem {
+                        text: qsTr("Menu Item %1").arg(index)
                     }
                 }
             }
