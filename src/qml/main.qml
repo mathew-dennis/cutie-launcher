@@ -93,7 +93,7 @@ CutieWindow {
             }
 
             Menu {
-                id: micromenu
+                id: menu
                 CutieMenuItem {
                     text: "Option 1"
                     onTriggered: {
