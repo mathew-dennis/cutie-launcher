@@ -65,11 +65,12 @@ CutieWindow {
 
             CutieButton {
                 id: appIconButton
-                anchors.fill: parent
+                width: launchAppGrid.cellWidth
+                height: width
                 icon.name: model["Desktop Entry/Icon"]
                 icon.source: "file://" + model["Desktop Entry/Icon"]
-                icon.height: parent.height / 2
-                icon.width: parent.height / 2
+                icon.height: width / 2
+                icon.width: height / 2
                 background: null
 
                 onPressed: {
