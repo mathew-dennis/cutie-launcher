@@ -57,44 +57,69 @@ CutieWindow {
         }
 
         delegate: Item {
+            width: launchAppGrid.cellWidth
+            height: launchAppGrid.cellHeight
+
+            property bool longPress: false
+            property alias menu: menu
+
             CutieButton {
                 id: appIconButton
-                width: launchAppGrid.cellWidth
-                height: width
+                anchors.fill: parent
                 icon.name: model["Desktop Entry/Icon"]
                 icon.source: "file://" + model["Desktop Entry/Icon"]
-                icon.height: width / 2
-                icon.width: height / 2
+                icon.height: parent.height / 2
+                icon.width: parent.height / 2
                 background: null
 
-                onClicked: {
-                    compositor.execApp(model["Desktop Entry/Exec"]);
+                onPressed: {
+                    longPress = false
+                    longPressTimer.start()
                 }
 
-                CutieMenu {
-                    Repeater {
-                        model: 5
-                        CutieMenuItem {
-                            text: qsTr("Menu Item %1").arg(index)
-                            onTriggered: {
-                                // Handle menu item click
-                            }
+                onReleased: {
+                    longPressTimer.stop()
+                    if (!longPress) {
+                        compositor.execApp(model["Desktop Entry/Exec"])
+                    }
+                }
+            }
+
+            CutieMenu {
+                id: menu
+                Repeater {
+                    model: 5
+                    CutieMenuItem {
+                        text: qsTr("Menu Item %1").arg(index)
+                        onTriggered: {
+                            // Handle menu item click
                         }
                     }
                 }
             }
 
             CutieLabel {
-                anchors.bottom: appIconButton.bottom
-                anchors.horizontalCenter: appIconButton.horizontalCenter
+                anchors {
+                    bottom: appIconButton.bottom
+                    horizontalCenter: appIconButton.horizontalCenter
+                }
                 text: model["Desktop Entry/Name"]
                 font.pixelSize: 12
                 clip: true
-                width: 2 * appIconButton.width / 3
+                width: parent.width * 2 / 3
                 elide: Text.ElideRight
                 horizontalAlignment: Text.AlignHCenter
             }
-            
+
+            Timer {
+                id: longPressTimer
+                interval: 1000
+                repeat: false
+                onTriggered: {
+                    longPress = true
+                    menu.open()
+                }
+            }
         }
     }
 
