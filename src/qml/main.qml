@@ -29,6 +29,7 @@ CutieWindow {
         property real tempContentY: 0
         property bool refreshing: false
 
+
         onAtYBeginningChanged: {
             if(atYBeginning){
                 tempContentY = contentY
@@ -56,8 +57,6 @@ CutieWindow {
         }
 
         delegate: Item {
-            property bool longPress: false
-
             CutieButton {
                 id: appIconButton
                 width: launchAppGrid.cellWidth
@@ -67,18 +66,8 @@ CutieWindow {
                 icon.height: width / 2
                 icon.width: height / 2
                 background: null
-
-                onPressed: {
-                    longPress = false
-                    longPressTimer.start()
-                }
-
-                onReleased: {
-                    longPressTimer.stop()
-                    if (!longPress) {
-                        compositor.execApp(model["Desktop Entry/Exec"])
-                    }
-                }
+                onClicked:
+                    compositor.execApp(model["Desktop Entry/Exec"]);
             }
 
             CutieLabel {
@@ -91,23 +80,13 @@ CutieWindow {
                 elide: Text.ElideRight
                 horizontalAlignment: Text.AlignHCenter
             }
-
+            
             menu: CutieMenu {
                 Repeater {
                     model: 5
                     CutieMenuItem {
                         text: qsTr("Menu Item %1").arg(index)
                     }
-                }
-            }
-
-            Timer {
-                id: longPressTimer
-                interval: 1000
-                repeat: false
-                onTriggered: {
-                    longPress = true
-                    menu.open()
                 }
             }
         }
