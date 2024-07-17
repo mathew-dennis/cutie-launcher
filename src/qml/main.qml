@@ -94,12 +94,6 @@ CutieWindow {
 
             Menu  {
                 id: menu
-                Rectangle {
-		            id: backgroundRect
-		            anchors.fill: parent
-		            radius: 5
-		            color: Atmosphere.primaryColor
-	            }
                 CutieMenuItem {
                     text: "Option 1"
                     onTriggered: {
