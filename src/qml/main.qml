@@ -57,18 +57,19 @@ CutieWindow {
         }
 
         delegate: Item {
+            width: launchAppGrid.cellWidth
+            height: launchAppGrid.cellHeight
 
             property bool longPress: false
             property alias menu: menu
 
             CutieButton {
                 id: appIconButton
-                width: launchAppGrid.cellWidth
-                height: width
+                anchors.fill: parent
                 icon.name: model["Desktop Entry/Icon"]
                 icon.source: "file://" + model["Desktop Entry/Icon"]
-                icon.height: width / 2
-                icon.width: height / 2
+                icon.height: parent.height / 2
+                icon.width: parent.height / 2
                 background: null
 
                 onPressed: {
