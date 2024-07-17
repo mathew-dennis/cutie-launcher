@@ -57,6 +57,10 @@ CutieWindow {
         }
 
         delegate: Item {
+
+            property bool longPress: false
+            property alias menu: menu
+
             CutieButton {
                 id: appIconButton
                 width: launchAppGrid.cellWidth
@@ -66,8 +70,31 @@ CutieWindow {
                 icon.height: width / 2
                 icon.width: height / 2
                 background: null
-                onClicked:
-                    compositor.execApp(model["Desktop Entry/Exec"]);
+
+                onPressed: {
+                    longPress = false
+                    longPressTimer.start()
+                }
+
+                onReleased: {
+                    longPressTimer.stop()
+                    if (!longPress) {
+                        compositor.execApp(model["Desktop Entry/Exec"])
+                    }
+                }
+            }
+
+            CutieMenu {
+                id: menu
+                Repeater {
+                    model: 5
+                    CutieMenuItem {
+                        text: qsTr("Menu Item %1").arg(index)
+                        onTriggered: {
+                            // Handle menu item click
+                        }
+                    }
+                }
             }
 
             CutieLabel {
@@ -79,6 +106,16 @@ CutieWindow {
                 width: 2 * appIconButton.width / 3
                 elide: Text.ElideRight
                 horizontalAlignment: Text.AlignHCenter
+            }
+
+            Timer {
+                id: longPressTimer
+                interval: 1000
+                repeat: false
+                onTriggered: {
+                    longPress = true
+                    menu.open()
+                }
             }
         }
     }
