@@ -94,7 +94,6 @@ CutieWindow {
 
             Menu  {
                 id: menu
-                background: null
                 CutieMenuItem {
                     text: "Option 1"
                     onTriggered: {
