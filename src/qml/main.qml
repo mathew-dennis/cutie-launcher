@@ -66,8 +66,22 @@ CutieWindow {
                 icon.height: width / 2
                 icon.width: height / 2
                 background: null
-                onClicked:
+
+                onClicked: {
                     compositor.execApp(model["Desktop Entry/Exec"]);
+                }
+
+                CutieMenu {
+                    Repeater {
+                        model: 5
+                        CutieMenuItem {
+                            text: qsTr("Menu Item %1").arg(index)
+                            onTriggered: {
+                                // Handle menu item click
+                            }
+                        }
+                    }
+                }
             }
 
             CutieLabel {
