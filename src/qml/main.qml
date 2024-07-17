@@ -88,6 +88,7 @@ CutieWindow {
 
             CutieMenu {
                 id: menu
+                width: window.width / 2
                 Repeater {
                     model: 5
                     CutieMenuItem {
