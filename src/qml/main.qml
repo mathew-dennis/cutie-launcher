@@ -94,7 +94,7 @@ CutieWindow {
 
             Menu  {
                 id: menu
-                background: Rectangle {
+                Rectangle {
 		            id: backgroundRect
 		            anchors.fill: parent
 		            radius: 5
