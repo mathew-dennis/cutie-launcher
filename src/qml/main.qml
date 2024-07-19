@@ -89,7 +89,7 @@ CutieWindow {
 
             CutieMenu {
                 id: menu
-                width: window.width * 3 / 2
+                width: window.width * 2 / 3
                 CutieMenuItem {
                     text: qsTr("Add to favorites")
                     onTriggered: {
