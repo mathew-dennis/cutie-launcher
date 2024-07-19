@@ -118,7 +118,7 @@ CutieWindow {
             
             CutieStore {
               id: favoriteStore
-              appName: "cutie-panel"
+              appName: "cutie-home"
               storeName: "favoriteItems"
             }
 
