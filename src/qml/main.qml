@@ -98,9 +98,9 @@ CutieWindow {
                 }
                 
                 CutieMenuItem {
-                    text: qsTr("Dummy Item")
+                    text: qsTr("Retrieve and log favorite")
                     onTriggered: {
-                        // Handle dummy action if needed
+                        retrieveFavoriteItem(model["Desktop Entry/Name"]);
                     }
                 }
             }
@@ -124,8 +124,18 @@ CutieWindow {
 
             function saveFavoriteItem(name, iconPath, execCommand) {
                let data = favoriteStore.data;
-               data["favouriteApp-" + name] = { "icon": iconPath, "command": execCommand };
+               data["favoriteApp-" + name] = { "icon": iconPath, "command": execCommand };
                favoriteStore.data = data;
+            }
+
+            function retrieveFavoriteItem(name) {
+               let data = favoriteStore.data;
+               if ("favoriteApp-" + name in data) {
+                   let item = data["favoriteApp-" + name];
+                   console.log("Retrieved Item:", JSON.stringify(item));
+               } else {
+                   console.log("Item not found in favorites:", name);
+               }
             }
 
             Timer {
