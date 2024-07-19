@@ -89,7 +89,7 @@ CutieWindow {
 
             CutieMenu {
                 id: menu
-                width: window.width / 2
+                width: window.width * 3 / 2
                 CutieMenuItem {
                     text: qsTr("Add to favorites")
                     onTriggered: {
@@ -133,7 +133,7 @@ CutieWindow {
                 if (data.hasOwnProperty("favoriteApp-" + name)) {
                     delete data["favoriteApp-" + name];
                     favoriteStore.data = data;
-                } 
+                }
             }
 
             Timer {
