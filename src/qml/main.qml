@@ -81,9 +81,8 @@ CutieWindow {
 
                 onReleased: {
                     longPressTimer.stop()
-                    if (!longPress) {
+                    if (!longPress)
                         compositor.execApp(model["Desktop Entry/Exec"])
-                    }
                 }
             }
 
@@ -118,12 +117,11 @@ CutieWindow {
             
             CutieStore {
               id: favoriteStore
-              appName: "cutie-home"
+              appName: "cutie-launcher"
               storeName: "favoriteItems"
             }
 
             function saveFavoriteItem(name, iconPath, execCommand) {
-               console.log(" create new entry ");
                let data = favoriteStore.data;
                data["favoriteApp-" + name] = { "icon": iconPath, "command": execCommand };
                favoriteStore.data = data;
