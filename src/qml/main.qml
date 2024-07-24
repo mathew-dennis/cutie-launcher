@@ -91,16 +91,14 @@ CutieWindow {
                 width: window.width * 2 / 3
                 CutieMenuItem {
                     text: qsTr("Add to favorites")
-                    onTriggered: {
+                    onTriggered:
                         saveFavoriteItem(model["Desktop Entry/Name"], model["Desktop Entry/Icon"], model["Desktop Entry/Exec"]);
-                    }
                 }
 
                 CutieMenuItem {
                     text: qsTr("Remove from favorites")
-                    onTriggered: {
+                    onTriggered:
                         removeFavoriteItem(model["Desktop Entry/Name"]);
-                    }
                 }
             }
 
