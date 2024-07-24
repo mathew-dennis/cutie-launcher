@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Window
 import Cutie
+import Cutie.Store
 import Cutie.Wlc
 
 CutieWindow {
@@ -57,6 +58,12 @@ CutieWindow {
         }
 
         delegate: Item {
+            width: launchAppGrid.cellWidth
+            height: launchAppGrid.cellHeight
+
+            property bool longPress: false
+            property alias menu: menu
+
             CutieButton {
                 id: appIconButton
                 width: launchAppGrid.cellWidth
@@ -66,8 +73,35 @@ CutieWindow {
                 icon.height: width / 2
                 icon.width: height / 2
                 background: null
-                onClicked:
-                    compositor.execApp(model["Desktop Entry/Exec"]);
+
+                onPressed: {
+                    longPress = false
+                    longPressTimer.start()
+                }
+
+                onReleased: {
+                    longPressTimer.stop()
+                    if (!longPress)
+                        compositor.execApp(model["Desktop Entry/Exec"])
+                }
+            }
+
+            CutieMenu {
+                id: menu
+                width: window.width * 2 / 3
+                CutieMenuItem {
+                    text: qsTr("Add to favorites")
+                    onTriggered: {
+                        saveFavoriteItem(model["Desktop Entry/Name"], model["Desktop Entry/Icon"], model["Desktop Entry/Exec"]);
+                    }
+                }
+
+                CutieMenuItem {
+                    text: qsTr("Remove from favorites")
+                    onTriggered: {
+                        removeFavoriteItem(model["Desktop Entry/Name"]);
+                    }
+                }
             }
 
             CutieLabel {
@@ -79,6 +113,36 @@ CutieWindow {
                 width: 2 * appIconButton.width / 3
                 elide: Text.ElideRight
                 horizontalAlignment: Text.AlignHCenter
+            }
+            
+            CutieStore {
+              id: favoriteStore
+              appName: "cutie-launcher"
+              storeName: "favoriteItems"
+            }
+
+            function saveFavoriteItem(name, iconPath, execCommand) {
+               let data = favoriteStore.data;
+               data["favoriteApp-" + name] = { "icon": iconPath, "command": execCommand };
+               favoriteStore.data = data;
+            }
+
+            function removeFavoriteItem(name) {
+                let data = favoriteStore.data;
+                if (data.hasOwnProperty("favoriteApp-" + name)) {
+                    delete data["favoriteApp-" + name];
+                    favoriteStore.data = data;
+                }
+            }
+
+            Timer {
+                id: longPressTimer
+                interval: 1000
+                repeat: false
+                onTriggered: {
+                    longPress = true
+                    menu.open()
+                }
             }
         }
     }
