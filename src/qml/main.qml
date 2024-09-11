@@ -89,12 +89,6 @@ CutieWindow {
                     }
                 }
 
-                CutieMenuItem {
-                    text: qsTr("Remove from favorites")
-                    onTriggered: {
-                        removeFavoriteItem(model["Desktop Entry/Name"]);
-                    }
-                }
             }
 
             CutieLabel {
@@ -120,13 +114,6 @@ CutieWindow {
                favoriteStore.data = data;
             }
 
-            function removeFavoriteItem(name) {
-                let data = favoriteStore.data;
-                if (data.hasOwnProperty("favoriteApp-" + name)) {
-                    delete data["favoriteApp-" + name];
-                    favoriteStore.data = data;
-                }
-            }
         }
     }
 
