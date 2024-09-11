@@ -73,17 +73,10 @@ CutieWindow {
                 icon.height: width / 2
                 icon.width: height / 2
                 background: null
-
-                onPressed: {
-                    longPress = false
-                    longPressTimer.start()
-                }
-
-                onReleased: {
-                    longPressTimer.stop()
-                    if (!longPress)
-                        compositor.execApp(model["Desktop Entry/Exec"])
-                }
+                onClicked:
+                    compositor.execApp(model["Desktop Entry/Exec"])
+                onPressAndHold:
+                    menu.open()
             }
 
             CutieMenu {
@@ -96,12 +89,6 @@ CutieWindow {
                     }
                 }
 
-                CutieMenuItem {
-                    text: qsTr("Remove from favorites")
-                    onTriggered: {
-                        removeFavoriteItem(model["Desktop Entry/Name"]);
-                    }
-                }
             }
 
             CutieLabel {
@@ -127,23 +114,6 @@ CutieWindow {
                favoriteStore.data = data;
             }
 
-            function removeFavoriteItem(name) {
-                let data = favoriteStore.data;
-                if (data.hasOwnProperty("favoriteApp-" + name)) {
-                    delete data["favoriteApp-" + name];
-                    favoriteStore.data = data;
-                }
-            }
-
-            Timer {
-                id: longPressTimer
-                interval: 1000
-                repeat: false
-                onTriggered: {
-                    longPress = true
-                    menu.open()
-                }
-            }
         }
     }
 
