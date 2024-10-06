@@ -40,6 +40,7 @@ CutieWindow {
 
     // Call loadAllApps when the window is shown or at some other appropriate time
     Component.onCompleted: {
+        console.log("App Detailsloading started");
         loadAllApps(); // Adjust the path accordingly
     }
 
