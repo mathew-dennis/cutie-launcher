@@ -4,7 +4,7 @@ import QtQuick.Window
 import Cutie
 import Cutie.Store
 import Cutie.Wlc
-Cutie.Desktopfilephraser
+import Cutie.Desktopfilephraser
 
 CutieWindow {
     id: window
