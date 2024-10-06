@@ -13,7 +13,7 @@ CutieWindow {
     title: qsTr("Launcher")
 
     function addApp(data) {
-        launcherApps.append(data)
+        
     }
 
     CutieWlc {
