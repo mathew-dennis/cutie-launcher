@@ -4,6 +4,7 @@ import QtQuick.Window
 import Cutie
 import Cutie.Store
 import Cutie.Wlc
+Cutie.Desktopfilephraser
 
 CutieWindow {
     id: window
@@ -12,8 +13,29 @@ CutieWindow {
     visible: true
     title: qsTr("Launcher")
 
-    function addApp(data) {
-        launcherApps.append(data)
+    // Function to load all available apps
+    function loadAllApps() {
+        let allApps = CutieDesktopFilePhraser.fetchAllEntries(); // Get all entries
+        launcherApps.clear(); // Clear existing entries if needed
+
+        // Iterate through each app entry and append to launcherApps
+        for (let i = 0; i < allApps.length; i++) {
+            let appDetails = allApps[i];
+            // Log the contents of appDetails
+            console.log("App Details:", appDetails);
+
+            let data = {
+                "Desktop Entry/Name": appDetails["Name"], // Adjust according to the actual key
+                "Desktop Entry/Icon": appDetails["Icon"],
+                "Desktop Entry/Exec": appDetails["Exec"]
+            };
+            launcherApps.append(data); // Append new app data to the model
+        }
+    }
+
+    // Call loadAllApps when the window is shown or at some other appropriate time
+    Component.onCompleted: {
+        loadAllApps(); // Adjust the path accordingly
     }
 
     CutieWlc {
