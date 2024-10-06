@@ -19,11 +19,11 @@ CutieWindow {
     }
     function loadAllApps() {
 
-        console.log("App Detailsloading started");
+        console.log("App Details loading stage 2 ");
 
         let allApps = CutieDesktopFilePhraser.fetchAllEntries(); // Get all entries
         launcherApps.clear(); // Clear existing entries if needed
-
+        console.log("App Details loading stage 3");
         // Iterate through each app entry and append to launcherApps
         for (let i = 0; i < allApps.length; i++) {
             let appDetails = allApps[i];
@@ -41,7 +41,7 @@ CutieWindow {
 
     // Call loadAllApps when the window is shown or at some other appropriate time
     Component.onCompleted: {
-        console.log("App Detailsloading started");
+        console.log("App Details loading stage 1");
         loadAllApps(); // Adjust the path accordingly
     }
 
