@@ -21,7 +21,7 @@ CutieWindow {
 
         console.log("App Detailsloading started");
 
-        let allApps = CutieDesktopFilePhraser.fetchAllEntries(); // Get all entries
+        let allApps = Cutie.Desktopfilephraser.fetchAllEntries(); // Get all entries
         launcherApps.clear(); // Clear existing entries if needed
 
         // Iterate through each app entry and append to launcherApps
