@@ -4,6 +4,8 @@ import QtQuick.Window
 import Cutie
 import Cutie.Store
 import Cutie.Wlc
+import Cutie.Desktopfilephraser
+
 
 CutieWindow {
     id: window
@@ -15,6 +17,7 @@ CutieWindow {
     function addApp(data) {
         
     }
+
 
     CutieWlc {
         id: compositor
