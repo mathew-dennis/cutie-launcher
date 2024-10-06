@@ -15,7 +15,7 @@ CutieWindow {
     title: qsTr("Launcher")
 
     function addApp(data) {
-        
+
     }
     function loadAllApps() {
 
