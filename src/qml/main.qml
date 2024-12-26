@@ -21,7 +21,7 @@ CutieWindow {
 
         console.log("App Details loading stage 2 ");
 
-        let allApps = CutieDesktopFilePhraserr.fetchAllEntries(); // Get all entries
+        let allApps = desktopFilePhraser.fetchAllEntries(); // Get all entries
         launcherApps.clear(); // Clear existing entries if needed
         console.log("App Details loading stage 3");
         // Iterate through each app entry and append to launcherApps
@@ -49,6 +49,9 @@ CutieWindow {
         id: compositor
     }
 
+    CutieDesktopFilePhraser {
+        id: desktopFilePhraser
+    }
     GridView {
         id: launchAppGrid
         anchors.fill: parent
