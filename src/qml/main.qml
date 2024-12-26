@@ -14,6 +14,14 @@ CutieWindow {
     visible: true
     title: qsTr("Launcher")
 
+    CutieWlc {
+        id: compositor
+    }
+
+    CutieDesktopFilePhraser {
+        id: desktopFilePhraser
+    }
+    
     function addApp(data) {
 
     }
@@ -45,11 +53,7 @@ CutieWindow {
         loadAllApps(); // Adjust the path accordingly
     }
 
-    CutieWlc {
-        id: compositor
-    }
 
- 
     GridView {
         id: launchAppGrid
         anchors.fill: parent
