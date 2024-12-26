@@ -49,9 +49,7 @@ CutieWindow {
         id: compositor
     }
 
-    CutieDesktopFilePhraser {
-        id: desktopFilePhraser
-    }
+ 
     GridView {
         id: launchAppGrid
         anchors.fill: parent
