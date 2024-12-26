@@ -39,10 +39,6 @@ CutieWindow {
         }
     }
 
-    // Call loadAllApps when the window is shown or at some other appropriate time
-    Component.onCompleted: {
-        console.log("App Details loading stage 1");
-        loadAllApps(); // Adjust the path accordingly
     }
 
     CutieWlc {
@@ -150,4 +146,9 @@ CutieWindow {
     }
 
     ListModel { id: launcherApps }
+    
+        // Call loadAllApps when the window is shown or at some other appropriate time
+    Component.onCompleted: {
+        console.log("App Details loading stage 1");
+        loadAllApps(); // Adjust the path accordingly
 }
