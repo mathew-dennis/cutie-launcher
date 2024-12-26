@@ -21,7 +21,7 @@ CutieWindow {
 
         console.log("App Details loading stage 2 ");
 
-        let allApps = desktopFilePhraserr.fetchAllEntries(); // Get all entries
+        let allApps = desktopFilePhraser.fetchAllEntries(); // Get all entries
         launcherApps.clear(); // Clear existing entries if needed
         console.log("App Details loading stage 3");
         // Iterate through each app entry and append to launcherApps
@@ -39,6 +39,10 @@ CutieWindow {
         }
     }
 
+    // Call loadAllApps when the window is shown or at some other appropriate time
+    Component.onCompleted: {
+        console.log("App Details loading stage 1");
+        loadAllApps(); // Adjust the path accordingly
     }
 
     CutieWlc {
@@ -146,9 +150,4 @@ CutieWindow {
     }
 
     ListModel { id: launcherApps }
-
-        // Call loadAllApps when the window is shown or at some other appropriate time
-    Component.onCompleted: {
-        console.log("App Details loading stage 1");
-        loadAllApps(); // Adjust the path accordingly
 }
