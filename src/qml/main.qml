@@ -28,7 +28,8 @@ CutieWindow {
 
         let allApps = CutieDesktopFilePhraser.fetchAllEntries(); // Get all entries
         launcherApps.clear(); // Clear existing entries if needed
-        console.log("App Details loading stage 3");
+        console.log("App Details loading stage 4");
+        console.log("App Details loading stage 5: number of entries:", allApps.length);
         // Iterate through each app entry and append to launcherApps
         for (let i = 0; i < allApps.length; i++) {
             let appDetails = allApps[i];
