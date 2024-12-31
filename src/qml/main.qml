@@ -34,14 +34,9 @@ CutieWindow {
         for (let i = 0; i < allApps.length; i++) {
             let appDetails = allApps[i];
             // Log the contents of appDetails
-            console.log("App Details:", appDetails);
+            console.log("App Details loading stage 6:", appDetails);
 
-            let data = {
-                "Desktop Entry/Name": appDetails["Name"], // Adjust according to the actual key
-                "Desktop Entry/Icon": appDetails["Icon"],
-                "Desktop Entry/Exec": appDetails["Exec"]
-            };
-            launcherApps.append(data); // Append new app data to the model
+            launcherApps.append(appDetails); // Append new app data to the model
         }
     }
 
