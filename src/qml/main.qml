@@ -18,7 +18,10 @@ CutieWindow {
         id: compositor
     }
 
-
+    CutieDesktopFilePhraser {
+        id: desktopFilePhraser
+    }
+    
     function addApp(data) {
 
     }
@@ -26,7 +29,7 @@ CutieWindow {
 
         console.log("App Details loading stage 2 ");
 
-        let allApps = desktopFilePhraserr.fetchAllEntries(); // Get all entries
+        let allApps = desktopFilePhraser.fetchAllEntries(); // Get all entries
         launcherApps.clear(); // Clear existing entries if needed
         console.log("App Details loading stage 3");
         // Iterate through each app entry and append to launcherApps
