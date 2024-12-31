@@ -18,10 +18,7 @@ CutieWindow {
         id: compositor
     }
 
-    CutieFeedback {
-        id: desktopFilePhraserrr
-    }
-    
+
     function addApp(data) {
 
     }
