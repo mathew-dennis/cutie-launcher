@@ -18,7 +18,7 @@ CutieWindow {
         id: compositor
     }
 
-    CutieFeedback {
+    cutiefeedback {
         id: desktopFilePhraser
     }
     
