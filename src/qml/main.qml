@@ -18,10 +18,7 @@ CutieWindow {
         id: compositor
     }
 
-    CutieDesktopFilePhraser {
-        id: desktopFilePhraser
-    }
-    
+
     function addApp(data) {
 
     }
