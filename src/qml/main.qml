@@ -23,27 +23,19 @@ CutieWindow {
 
     }
     function loadAllApps() {
+        let allApps = CutieDesktopFilePhraser.fetchAllEntries();
+        launcherApps.clear(); 
 
-        console.log("App Details loading stage 2 ");
+        console.log("Loading app entres to Launcher, number of entries:", allApps.length);
 
-        let allApps = CutieDesktopFilePhraser.fetchAllEntries(); // Get all entries
-        launcherApps.clear(); // Clear existing entries if needed
-        console.log("App Details loading stage 4");
-        console.log("App Details loading stage 5: number of entries:", allApps.length);
-        // Iterate through each app entry and append to launcherApps
-        for (let i = 0; i < allApps.length; i++) {
-            let appDetails = allApps[i];
-            // Log the contents of appDetails
-            console.log("App Details loading stage 6:", appDetails);
-
-            launcherApps.append(appDetails); // Append new app data to the model
+        for (const app of allApps) {
+            launcherApps.append(app);
         }
     }
 
-    // Call loadAllApps when the window is shown or at some other appropriate time
+    // Call loadAllApps when the window is loaded
     Component.onCompleted: {
-        console.log("App Details loading stage 1");
-        loadAllApps(); // Adjust the path accordingly
+        loadAllApps();
     }
 
 
@@ -78,8 +70,7 @@ CutieWindow {
 
         onMovementEnded: {
             if (refreshing) {
-                launcherApps.clear();
-                launcher.loadAppList();
+                loadAllApps();
                 refreshing = false;
             }
         }
