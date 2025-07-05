@@ -2,7 +2,6 @@
 #include <QQmlApplicationEngine>
 #include <QQmlEngine>
 #include <QQmlContext>
-#include <launcher.h>
 
 int main(int argc, char *argv[])
 {
@@ -10,9 +9,6 @@ int main(int argc, char *argv[])
 
 	QGuiApplication app(argc, argv);
 	QQmlApplicationEngine engine;
-
-	Launcher *launcher = new Launcher(&engine);
-	engine.rootContext()->setContextProperty("launcher", launcher);
 
 	const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
 	QObject::connect(
@@ -23,8 +19,6 @@ int main(int argc, char *argv[])
 		},
 		Qt::QueuedConnection);
 	engine.load(url);
-
-	launcher->loadAppList();
 
 	return app.exec();
 }
