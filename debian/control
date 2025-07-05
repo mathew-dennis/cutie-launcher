@@ -14,5 +14,5 @@ Package: cutie-launcher
 Architecture: any
 Multi-Arch: foreign
 Pre-Depends: ${misc:Pre-Depends}
-Depends: ${misc:Depends}, ${shlibs:Depends}, qml6-module-cutie, qml6-module-cutiewlc
+Depends: ${misc:Depends}, ${shlibs:Depends}, qml6-module-cutie, qml6-module-cutiewlc, qml6-module-cutiedesktopfileparser
 Description: This package contains the default app launcher for Cutie.

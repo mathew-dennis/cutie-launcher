@@ -13,13 +13,10 @@ foreach(path IN LISTS qml_SRC)
 endforeach()
 
 set(APP_SOURCES 
-		main.cpp
-		launcher.cpp)
+		main.cpp)
 
-set(APP_HEADERS
-		launcher.h)
 
-qt_add_executable(${PROJECT_NAME} ${APP_SOURCES} ${APP_HEADERS})
+qt_add_executable(${PROJECT_NAME} ${APP_SOURCES})
 
 qt_add_resources(${PROJECT_NAME} "resource"
 	PREFIX /
