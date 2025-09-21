@@ -29,6 +29,18 @@ CutieWindow {
         }
     }
 
+    CutieStore {
+              id: favoriteStore
+              appName: "cutie-launcher"
+              storeName: "favoriteItems"
+    }
+
+    function saveFavoriteItem(name) {
+               let data = favoriteStore.data;
+               data[name] = name;
+               favoriteStore.data = data;
+    }
+
     // Call loadAllApps when the window is loaded
     Component.onCompleted: {
         loadAllApps();
@@ -99,7 +111,7 @@ CutieWindow {
                 CutieMenuItem {
                     text: qsTr("Add to favorites")
                     onTriggered: {
-                        saveFavoriteItem(model["Desktop Entry/Name"], model["Desktop Entry/Icon"], model["Desktop Entry/Exec"]);
+                        saveFavoriteItem(model["Desktop Entry/Name"]);
                     }
                 }
 
@@ -115,19 +127,6 @@ CutieWindow {
                 elide: Text.ElideRight
                 horizontalAlignment: Text.AlignHCenter
             }
-            
-            CutieStore {
-              id: favoriteStore
-              appName: "cutie-launcher"
-              storeName: "favoriteItems"
-            }
-
-            function saveFavoriteItem(name, iconPath, execCommand) {
-               let data = favoriteStore.data;
-               data["favoriteApp-" + name] = { "icon": iconPath, "command": execCommand };
-               favoriteStore.data = data;
-            }
-
         }
     }
 
