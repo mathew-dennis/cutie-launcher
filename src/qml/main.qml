@@ -18,10 +18,6 @@ CutieWindow {
         id: compositor
     }
 
-
-    function addApp(data) {
-
-    }
     function loadAllApps() {
         let allApps = CutieDesktopFilePhraser.fetchAllEntries();
         launcherApps.clear(); 
