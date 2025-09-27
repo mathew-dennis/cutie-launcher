@@ -55,6 +55,7 @@ CutieWindow {
                 width: launchAppGrid.cellWidth
                 height: width
                 icon.name: model.name
+                icon.source: "file://" + model.icon
                 icon.height: width / 2
                 icon.width: height / 2
                 background: null
