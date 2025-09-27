@@ -14,12 +14,10 @@ CutieWindow {
     visible: true
     title: qsTr("Launcher")
 
-    CutieWlc {
-        id: compositor
-    }
+    CutieWlc { id: compositor }
 
-    // Shared model for all apps
-    property DesktopEntryModel allAppsModel: CutieDesktopFilePhraser.fetchAllEntriesModel()
+    // The model is initially undefined
+    property DesktopEntryModel allAppsModel: null
 
     CutieStore {
         id: favoriteStore
@@ -33,40 +31,18 @@ CutieWindow {
         favoriteStore.data = data;
     }
 
+    // Load model after the window has completed loading
+    Component.onCompleted: {
+        console.log("Launcher - Window loaded, initializing all apps model...")
+        allAppsModel = CutieDesktopFileParser.fetchAllEntriesModel()
+    }
+
     GridView {
         id: launchAppGrid
         anchors.fill: parent
-        model: allAppsModel   // bind directly to QAbstractListModel
+        model: allAppsModel   // bound to the model property
         cellWidth: width / Math.floor(width / 85)
         cellHeight: cellWidth
-
-        property real tempContentY: 0
-        property bool refreshing: false
-
-        onAtYBeginningChanged: {
-            if(atYBeginning){
-                tempContentY = contentY
-            }
-        }
-
-        onContentYChanged: {
-            if(atYBeginning){
-                if(Math.abs(tempContentY - contentY) > 30){
-                    if(refreshing){
-                        return;
-                    } else {
-                        refreshing = true;
-                    }
-                }
-            }
-        }
-
-        onMovementEnded: {
-            if(refreshing) {
-                allAppsModel = CutieDesktopFilePhraser.fetchAllEntriesModel() // reload
-                refreshing = false
-            }
-        }
 
         delegate: Item {
             width: launchAppGrid.cellWidth
@@ -78,7 +54,7 @@ CutieWindow {
                 id: appIconButton
                 width: launchAppGrid.cellWidth
                 height: width
-                icon.name: model.icon
+                icon.name: model.name
                 icon.source: "file://" + model.icon
                 icon.height: width / 2
                 icon.width: height / 2
