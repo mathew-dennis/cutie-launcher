@@ -4,7 +4,7 @@ import QtQuick.Window
 import Cutie
 import Cutie.Store
 import Cutie.Wlc
-import Cutie.Desktopfilephraser
+import Cutie.Desktopfileparser
 
 
 CutieWindow {
@@ -18,7 +18,7 @@ CutieWindow {
 
     // The model is initially undefined
     property var allAppsModel: null
-    
+
     CutieStore {
         id: favoriteStore
         appName: "cutie-launcher"
