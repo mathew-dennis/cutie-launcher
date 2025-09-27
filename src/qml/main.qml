@@ -6,7 +6,6 @@ import Cutie.Store
 import Cutie.Wlc
 import Cutie.Desktopfileparser
 
-
 CutieWindow {
     id: window
     width: 640
@@ -40,9 +39,33 @@ CutieWindow {
     GridView {
         id: launchAppGrid
         anchors.fill: parent
-        model: allAppsModel   // bound to the model property
+        model: allAppsModel
         cellWidth: width / Math.floor(width / 85)
         cellHeight: cellWidth
+
+        // Pull-to-refresh logic
+        property real tempContentY: 0
+        property bool refreshing: false
+
+        onAtYBeginningChanged: {
+            if (atYBeginning) tempContentY = contentY
+        }
+
+        onContentYChanged: {
+            if (atYBeginning) {
+                if (Math.abs(tempContentY - contentY) > 30 && !refreshing) {
+                    refreshing = true
+                }
+            }
+        }
+
+        onMovementEnded: {
+            if (refreshing) {
+                console.log("Refreshing all apps model...")
+                allAppsModel = CutieDesktopFileParser.fetchAllEntriesModel()
+                refreshing = false
+            }
+        }
 
         delegate: Item {
             width: launchAppGrid.cellWidth
@@ -54,17 +77,14 @@ CutieWindow {
                 id: appIconButton
                 width: launchAppGrid.cellWidth
                 height: width
-                icon.name: model.icon
+                icon.name: model.name
                 icon.source: "file://" + model.icon
                 icon.height: width / 2
                 icon.width: height / 2
                 background: null
 
-                onClicked:
-                    compositor.execApp(model.exec)
-
-                onPressAndHold:
-                    menu.open()
+                onClicked: compositor.execApp(model.exec)
+                onPressAndHold: menu.open()
             }
 
             CutieMenu {
