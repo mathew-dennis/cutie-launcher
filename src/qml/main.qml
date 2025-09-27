@@ -61,7 +61,7 @@ CutieWindow {
                 background: null
 
                 onClicked:
-                    compositor.execApp(model.exec)
+                    compositor.execApp(model.exe)
 
                 onPressAndHold:
                     menu.open()
