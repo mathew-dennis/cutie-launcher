@@ -4,7 +4,7 @@ import QtQuick.Window
 import Cutie
 import Cutie.Store
 import Cutie.Wlc
-import Cutie.Desktopfilephraser
+import Cutie.Desktopfileparser
 
 
 CutieWindow {
@@ -18,45 +18,30 @@ CutieWindow {
         id: compositor
     }
 
-    function loadAllApps() {
-        let allApps = CutieDesktopFilePhraser.fetchAllEntries();
-        launcherApps.clear(); 
-
-        console.log("Launcher : Loading app entries, number of entries:", allApps.length);
-
-        for (const app of allApps) {
-            launcherApps.append(app);
-        }
-    }
+    // Shared model for all apps
+    property DesktopEntryModel allAppsModel: CutieDesktopFilePhraser.fetchAllEntriesModel()
 
     CutieStore {
-              id: favoriteStore
-              appName: "cutie-launcher"
-              storeName: "favoriteItems"
+        id: favoriteStore
+        appName: "cutie-launcher"
+        storeName: "favoriteItems"
     }
 
     function saveFavoriteItem(name) {
-               let data = favoriteStore.data;
-               data[name] = name;
-               favoriteStore.data = data;
+        let data = favoriteStore.data;
+        data[name] = name;
+        favoriteStore.data = data;
     }
-
-    // Call loadAllApps when the window is loaded
-    Component.onCompleted: {
-        loadAllApps();
-    }
-
 
     GridView {
         id: launchAppGrid
         anchors.fill: parent
-        model: launcherApps
+        model: allAppsModel   // bind directly to QAbstractListModel
         cellWidth: width / Math.floor(width / 85)
         cellHeight: cellWidth
 
         property real tempContentY: 0
         property bool refreshing: false
-
 
         onAtYBeginningChanged: {
             if(atYBeginning){
@@ -77,9 +62,9 @@ CutieWindow {
         }
 
         onMovementEnded: {
-            if (refreshing) {
-                loadAllApps();
-                refreshing = false;
+            if(refreshing) {
+                allAppsModel = CutieDesktopFilePhraser.fetchAllEntriesModel() // reload
+                refreshing = false
             }
         }
 
@@ -87,20 +72,21 @@ CutieWindow {
             width: launchAppGrid.cellWidth
             height: launchAppGrid.cellHeight
 
-            property bool longPress: false
             property alias menu: menu
 
             CutieButton {
                 id: appIconButton
                 width: launchAppGrid.cellWidth
                 height: width
-                icon.name: model["Desktop Entry/Icon"]
-                icon.source: "file://" + model["Desktop Entry/Icon"]
+                icon.name: model.icon
+                icon.source: "file://" + model.icon
                 icon.height: width / 2
                 icon.width: height / 2
                 background: null
+
                 onClicked:
-                    compositor.execApp(model["Desktop Entry/Exec"])
+                    compositor.execApp(model.exec)
+
                 onPressAndHold:
                     menu.open()
             }
@@ -110,17 +96,14 @@ CutieWindow {
                 width: window.width / 2
                 CutieMenuItem {
                     text: qsTr("Add to favorites")
-                    onTriggered: {
-                        saveFavoriteItem(model["Desktop Entry/Name"]);
-                    }
+                    onTriggered: saveFavoriteItem(model.name)
                 }
-
             }
 
             CutieLabel {
                 anchors.bottom: appIconButton.bottom
                 anchors.horizontalCenter: appIconButton.horizontalCenter
-                text: model["Desktop Entry/Name"]
+                text: model.name
                 font.pixelSize: 12
                 clip: true
                 width: 2 * appIconButton.width / 3
@@ -129,6 +112,4 @@ CutieWindow {
             }
         }
     }
-
-    ListModel { id: launcherApps }
 }
