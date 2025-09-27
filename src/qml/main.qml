@@ -17,8 +17,8 @@ CutieWindow {
     CutieWlc { id: compositor }
 
     // The model is initially undefined
-    property DesktopEntryModel allAppsModel: null
-
+    property var allAppsModel: null
+    
     CutieStore {
         id: favoriteStore
         appName: "cutie-launcher"
