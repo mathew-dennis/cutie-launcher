@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Window
 import Cutie
 import Cutie.Wlc
+import Cutie.Store
 import Cutie.Desktopfileparser
 
 CutieWindow {
@@ -16,6 +17,18 @@ CutieWindow {
 
     // The model is initially undefined
     property var allAppsModel: null
+
+    CutieStore {
+        id: favoriteStore
+        appName: "cutie-launcher"
+        storeName: "favoriteItems"
+    }
+
+    function saveFavoriteItem(name) {
+        let data = favoriteStore.data;
+        data[name] = name;
+        favoriteStore.data = data;
+    }
 
     Component.onCompleted: {
         console.log("launcher - Window loaded, initializing all apps model...")
@@ -54,6 +67,7 @@ CutieWindow {
         }
 
         delegate: Item {
+            property alias menu: menu
             CutieButton {
                 id: appIconButton
                 width: launchAppGrid.cellWidth
@@ -65,6 +79,16 @@ CutieWindow {
                 background: null
 
                 onClicked: compositor.execApp(model.exec)
+                onPressAndHold: menu.open()
+            }
+
+            CutieMenu {
+                id: menu
+                width: window.width / 2
+                CutieMenuItem {
+                    text: qsTr("Add to favorites")
+                    onTriggered: saveFavoriteItem(model.name)
+                }
             }
 
             CutieLabel {
