@@ -33,6 +33,10 @@ CutieWindow {
     Component.onCompleted: {
         console.log("launcher - Window loaded, initializing all apps model...")
         allAppsModel = CutieDesktopFileParser.fetchAllEntriesModel()
+        console.log("launcher - Initialized with " + launchAppGrid.count + " apps")
+        Qt.callLater(() => {
+            console.log("launcher - initialized with " + launchAppGrid.count + " apps")
+        })
     }
 
     GridView {
